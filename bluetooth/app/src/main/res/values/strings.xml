@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">bluetooth</string>
+    <string name="app_name">BlueConnect</string>
+    <string name="textDC">Appareils connu</string>
 </resources>
