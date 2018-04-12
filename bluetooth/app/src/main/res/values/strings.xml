@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">BlueConnect</string>
     <string name="textDC">Appareils connu</string>
+
+    <!-- Configuration appareil -->
+    <string name="device_configuration.title">Configuration d\'un appareil</string>
+    <string name="device_configuration.launchSection">Lancement des applications</string>
+    <string name="device_configuration.radioManual">Manuel</string>
+    <string name="device_configuration.radioAuto">Automatique</string>
 </resources>
