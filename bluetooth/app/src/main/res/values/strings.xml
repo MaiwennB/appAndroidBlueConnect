@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BlueConnect</string>
     <string name="textTitre">Bienvenue sur cette application !</string>
-    <string name="textDC">Appareils connu</string>
+    <string name="textDC">Appareils connus</string>
+    <string name="text_btn_musique">Lancer la musique</string>
+    <string name="text_btn_gps">Lancer le GPS</string>
 </resources>
