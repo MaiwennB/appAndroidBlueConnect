@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BlueConnect</string>
+    <string name="textTitre">Bienvenue sur cette application !</string>
     <string name="textDC">Appareils connu</string>
 </resources>

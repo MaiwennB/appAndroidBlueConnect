@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context="lry.dip.bluetooth.main">
 
+    <TextView
+        android:id="@+id/textTitre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textTitre"
+        android:textColor="@color/bleu_clair"
+        android:textSize="@dimen/police_titre"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
