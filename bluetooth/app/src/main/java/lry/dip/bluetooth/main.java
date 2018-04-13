@@ -2,6 +2,7 @@ package lry.dip.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class main extends AppCompatActivity implements View.OnClickListener {
@@ -24,6 +23,9 @@ public class main extends AppCompatActivity implements View.OnClickListener {
     private Button btnRechercher;
     private ListView listDevice;
     private TextView textDeviceC;
+
+
+    private Intent mIntentionActivtite2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,8 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(this, "Bluetooth déja activer !!!", Toast.LENGTH_SHORT).show();
                     }
                 }
+                this.mIntentionActivtite2 = new Intent(main.this, lry.dip.launcher.launcher.class);
+                startActivity(this.mIntentionActivtite2);
                 break;
 
 
