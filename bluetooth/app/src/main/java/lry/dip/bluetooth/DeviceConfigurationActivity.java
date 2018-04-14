@@ -12,4 +12,9 @@ public class DeviceConfigurationActivity extends AppCompatActivity {
         super.onCreate(savedInstance);
         setContentView(R.layout.activity_device_configuration);
     }
+
+    /**
+     * On passe à la vue une instance de BluetoothDevice
+     * Mise à jour de la table en BDD
+     */
 }
