@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context="lry.dip.bluetooth.main">
 
+    <TextView
+        android:id="@+id/textTitre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textTitre"
+        android:textColor="@color/bleu_clair"
+        android:textSize="@dimen/police_titre"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,16 +25,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Active" />
+            android:text="@string/text_btn_activer" />
 
         <Button
-            android:id="@+id/buttonRecherche"
+            android:id="@+id/buttonAffiche"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Recherche"
+            android:text="@string/text_btn_afficher"
             tools:layout_editor_absoluteX="88dp"
             tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/buttonRecherch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_btn_rechercher" />
 
     </LinearLayout>
 
@@ -42,5 +57,16 @@
         android:layout_height="match_parent" >
 
     </ListView>
+
+    <TextView
+        android:id="@+id/text_nouvel_appareil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_dispo" />
+
+    <ListView
+        android:id="@+id/listeNouvelAppareil"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
