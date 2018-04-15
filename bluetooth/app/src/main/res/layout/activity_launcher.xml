@@ -26,5 +26,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_btn_gps"/>
         </TableRow>
+        <TableRow>
+
+            <Button
+                android:id="@+id/btn_lnc_youtube"
+                android:layout_width="374dp"
+                android:layout_height="wrap_content"
+                android:text="@string/text_btn_youtube" />
+        </TableRow>
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
