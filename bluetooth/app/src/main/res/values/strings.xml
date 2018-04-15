@@ -8,6 +8,12 @@
     <string name="device_configuration.launchSection">Lancement des applications</string>
     <string name="device_configuration.radioManual">Manuel</string>
     <string name="device_configuration.radioAuto">Automatique</string>
+    <string name="device_configuration.buttonValider">Valider</string>
+
+    <!-- Launcher -->
+    <string name="launcher.category.browser">Navigateur</string>
+    <string name="launcher.category.gps">GPS</string>
+    <string name="launcher.category.music">Musique</string>
 
     <string name="text_btn_activer">ACTIVER</string>
     <string name="text_btn_afficher">AFFICHER</string>

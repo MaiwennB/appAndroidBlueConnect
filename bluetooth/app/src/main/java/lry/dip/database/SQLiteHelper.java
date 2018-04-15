@@ -11,14 +11,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String DEVICE_CONFIGURATION_TABLE_NAME="devices_configurations"; // table name
     public static final String DEVICE_CONFIGURATION_TABLE_CREATE= // create table script
         "CREATE TABLE " + DEVICE_CONFIGURATION_TABLE_NAME + " (\n" +
-        "\t" + DEVICE_CONFIGURATION_COLUMN_MAC + " string,\n" +
+        "\t" + DEVICE_CONFIGURATION_COLUMN_MAC + " STRING NOT NULL PRIMARY KEY,\n" +
         "\t" + DEVICE_CONFIGURATION_COLUMN_LAUNCH_INTENT + " string\n" +
-        ");";
+        ") WITHOUT ROWID;";
     public static final String DEVICE_CONFIGUATION_TABLE_DROP="DROP TABLE IF EXISTS " + DEVICE_CONFIGURATION_TABLE_NAME + ";"; // drop table script
 
     // DB configuration
     private static final String DATABASE_NAME="blueconnect.db"; // db name
-    private static final int DATABASE_VERSION=1; // db version
+    private static final int DATABASE_VERSION=3; // db version
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

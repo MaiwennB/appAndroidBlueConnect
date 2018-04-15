@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -47,6 +48,14 @@ public class main extends AppCompatActivity implements View.OnClickListener {
         btnRechercher.setOnClickListener(this);
 
         listDevice = (ListView)findViewById(R.id.listDevice);
+        /*listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(main.this, DeviceConfigurationActivity.class);
+                intent.putExtra(DeviceConfigurationActivity.KEY_EXTRA_DEVICE, (BluetoothDevice)devices.toArray()[i]);
+                startActivity(intent);
+            }
+        });*/
 
         textDeviceC = (TextView)findViewById(R.id.text_devices_connu);
         textDeviceC.setText(R.string.textDC);

@@ -1,15 +1,40 @@
 package lry.dip.database;
 
 public class DeviceConfiguration {
-    private String m_macAdress;
+    private String m_macAddress;
     private String m_launchIntent;
 
-    public String getMacAdress(){
-        return m_macAdress;
+    /**
+     * Default constructor
+     */
+    public DeviceConfiguration(){
+        this(null, null);
     }
 
-    public void setMacAdress(String macAdress){
-        m_macAdress = macAdress;
+    /**
+     * Constructor with mac address
+     * @param macAddress
+     */
+    public DeviceConfiguration(String macAddress){
+        this(macAddress, null);
+    }
+
+    /**
+     * Constructor with mac address and launchIntent values
+     * @param macAddress
+     * @param launchIntent
+     */
+    public DeviceConfiguration(String macAddress, String launchIntent){
+        setMacAddress(macAddress);
+        setLaunchIntent(launchIntent);
+    }
+
+    public String getMacAddress(){
+        return m_macAddress;
+    }
+
+    public void setMacAddress(String macAddress){
+        m_macAddress = macAddress;
     }
 
     public String getLaunchIntent(){
@@ -18,5 +43,9 @@ public class DeviceConfiguration {
 
     public void setLaunchIntent(String launchIntent){
         m_launchIntent = launchIntent;
+    }
+
+    public String toString(){
+        return String.format("%s : %s => %s", DeviceConfiguration.class, m_macAddress, m_launchIntent);
     }
 }

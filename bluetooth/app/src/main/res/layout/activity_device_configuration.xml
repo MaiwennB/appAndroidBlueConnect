@@ -7,50 +7,72 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/marges">
 
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="16sp"
-            tools:text="@string/device_configuration.title" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textSize="16sp"
+                tools:text="@string/device_configuration.title" />
+
+            <TextView
+                android:id="@+id/textViewDeviceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textSize="14sp"
+            android:textSize="@dimen/police"
             tools:text="@string/device_configuration.launchSection" />
 
         <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:id="@+id/radioGroup">
 
             <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/device_configuration.radioAuto" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/radioButtonManual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/device_configuration.radioManual" />
 
+            <RadioButton
+                android:id="@+id/radioButtonAuto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/device_configuration.radioAuto" />
+
         </RadioGroup>
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spinnerLaunch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/buttonValider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/device_configuration.buttonValider" />
 
     </LinearLayout>
 </ScrollView>
