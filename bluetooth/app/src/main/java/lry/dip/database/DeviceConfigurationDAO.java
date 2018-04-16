@@ -45,10 +45,17 @@ public class DeviceConfigurationDAO {
      * @return
      */
     public boolean saveDeviceConfiguration(DeviceConfiguration deviceConfiguration){
+        // Récupération de l'intent
+        Intent intent = deviceConfiguration.getLaunchIntent();
+        String intentValue = null;
+        if(intent!=null){
+            intentValue = intent.toUri(Intent.URI_ALLOW_UNSAFE+Intent.URI_INTENT_SCHEME);
+        }
+
         // Récupération des valeurs de la configuration
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.DEVICE_CONFIGURATION_COLUMN_MAC, deviceConfiguration.getMacAddress());
-        values.put(SQLiteHelper.DEVICE_CONFIGURATION_COLUMN_LAUNCH_INTENT, deviceConfiguration.getLaunchIntent().toUri(Intent.URI_ALLOW_UNSAFE+Intent.URI_ANDROID_APP_SCHEME));
+        values.put(SQLiteHelper.DEVICE_CONFIGURATION_COLUMN_LAUNCH_INTENT, intentValue);
 
         // Requête d'insertion avec update si l'adresse mac existe déjà
         long insertId = database.insertWithOnConflict(SQLiteHelper.DEVICE_CONFIGURATION_TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
@@ -92,7 +99,7 @@ public class DeviceConfigurationDAO {
         DeviceConfiguration deviceConfiguration = new DeviceConfiguration();
         deviceConfiguration.setMacAddress(cursor.getString(0));
         try {
-            deviceConfiguration.setLaunchIntent(Intent.parseUri(cursor.getString(1), Intent.URI_ALLOW_UNSAFE+Intent.URI_ANDROID_APP_SCHEME));
+            deviceConfiguration.setLaunchIntent(Intent.parseUri(cursor.getString(1), Intent.URI_ALLOW_UNSAFE+Intent.URI_INTENT_SCHEME));
         } catch (URISyntaxException e) {
             Log.e(DEBUG_STATE, "Erreur lors de la lecture de l'URI");
         }
