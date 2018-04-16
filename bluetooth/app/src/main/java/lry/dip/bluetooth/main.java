@@ -18,10 +18,12 @@ import android.widget.Toast;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import lry.dip.database.DeviceConfiguration;
 import lry.dip.database.DeviceConfigurationDAO;
+import lry.dip.launcher.launcher;
 
 public class main extends AppCompatActivity implements View.OnClickListener {
     // Bluetooth
@@ -36,30 +38,35 @@ public class main extends AppCompatActivity implements View.OnClickListener {
     private ListView listDevice;
     private TextView textDeviceC;
 
+    private ArrayList<String> mlistItems=new ArrayList<String>();
+    private ArrayAdapter<String> madapter;
+    private ListView mListDevice;
 
-    private Intent mIntentionActivtite2;
+
+    private ArrayAdapter<String> mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        btnActiver = (Button) findViewById(R.id.buttonActive);
-        btnActiver.setOnClickListener(this);
+        this.btnActiver = (Button) findViewById(R.id.buttonActive);
+        this.btnActiver.setOnClickListener(this);
 
-        btnAfficher = (Button) findViewById(R.id.buttonAffiche);
-        btnAfficher.setOnClickListener(this);
+        this.btnAfficher = (Button) findViewById(R.id.buttonAffiche);
+        this.btnAfficher.setOnClickListener(this);
 
-        btnRechercher = (Button) findViewById(R.id.buttonRecherche);
-        btnRechercher.setOnClickListener(this);
+        this.btnRechercher = (Button) findViewById(R.id.buttonRecherche);
+        this.btnRechercher.setOnClickListener(this);
 
         // Récupération DAO
-        deviceConfigurationDAO = new DeviceConfigurationDAO(getApplicationContext());
-        deviceConfigurationDAO.open();
+        this.deviceConfigurationDAO = new DeviceConfigurationDAO(getApplicationContext());
+        this.deviceConfigurationDAO.open();
 
-        listDevice = (ListView) findViewById(R.id.listDevice);
-        listDevice.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        this.listDevice = (ListView) findViewById(R.id.listDevice);
+        this.listDevice.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(main.this, DeviceConfigurationActivity.class);
@@ -77,7 +84,7 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                 DeviceConfiguration deviceConfiguration = deviceConfigurationDAO.getWithMacAddress(device.getAddress());
                 Intent intent = deviceConfiguration.getLaunchIntent();
                 if (intent == null)
-                    intent = new Intent(main.this, lry.dip.launcher.launcher.class);
+                    intent = new Intent(main.this, launcher.class);
 
                 // Verify that the intent will resolve to an activity
                 if (intent.resolveActivity(getPackageManager()) != null)
@@ -85,9 +92,12 @@ public class main extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-        textDeviceC = (TextView) findViewById(R.id.text_devices_connu);
-        textDeviceC.setText(R.string.textDC);
-        textDeviceC.setVisibility(View.INVISIBLE);
+        this.textDeviceC = (TextView) findViewById(R.id.text_devices_connu);
+        this.textDeviceC.setText(R.string.textDC);
+        this.textDeviceC.setVisibility(View.INVISIBLE);
+
+        this.mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
     }
 
     public void onClick(View pView) {
@@ -95,11 +105,11 @@ public class main extends AppCompatActivity implements View.OnClickListener {
             case R.id.buttonActive:
                 // ---- Activation du bluetooth ----
                 // Test si l'appareil e
-                if (bluetoothAdapter == null) {
+                if (this.bluetoothAdapter == null) {
                     Toast.makeText(this, "Bluetooth indisponible", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (!bluetoothAdapter.isEnabled()) {
-                        bluetoothAdapter.enable();
+                    if (!this.bluetoothAdapter.isEnabled()) {
+                        this.bluetoothAdapter.enable();
                         Toast.makeText(this, "Bluetooth activé", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(this, "Bluetooth déjà activé", Toast.LENGTH_SHORT).show();
@@ -110,29 +120,23 @@ public class main extends AppCompatActivity implements View.OnClickListener {
 
             case R.id.buttonAffiche:
                 // Test de l'existence de la fonctionalitée sur l'appareil
-                if (bluetoothAdapter == null) {
+                if (this.bluetoothAdapter == null) {
                     Toast.makeText(this, "Bluetooth indisponible", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (bluetoothAdapter.isEnabled()) {
+                    if (this.bluetoothAdapter.isEnabled()) {
                         //liste des appareils déja connu
                         String deviceL = "";
-                        devices = bluetoothAdapter.getBondedDevices();
-                        for (BluetoothDevice blueDevice : devices) {
-                            // System.out.println("Device = " + blueDevice.getName());
-                            //Toast.makeText(this, "Device = " + blueDevice.getName(), Toast.LENGTH_SHORT).show();
-                            deviceL = deviceL + blueDevice.getName() + " ; ";
+                        this.devices = bluetoothAdapter.getBondedDevices();
+                        for (BluetoothDevice blueDevice : this.devices) {
+                            this.ajouterDeviceListe(blueDevice.getName());
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                                android.R.layout.simple_list_item_1, deviceL.split(" ; "));
-                        listDevice.setAdapter(adapter);
-                        textDeviceC.setVisibility(View.VISIBLE);
+                        this.textDeviceC.setVisibility(View.VISIBLE);
 
                     } else {
                         Toast.makeText(this, "Veuillez activer le Bluetooth", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
-            //Elodie
             case R.id.buttonRecherche:
 
                 //enregistrement pour les diffusions lors de l'arrivée d'un nouvel appareil
@@ -148,19 +152,15 @@ public class main extends AppCompatActivity implements View.OnClickListener {
 
                 //mReceiver.onReceive(context, );
                 break;
-            //fin Elodie
         }
     }
 
-    //Elodie
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Toast.makeText(context, "Nouvel appareil = " + device.getName(), Toast.LENGTH_SHORT).show();
-                // String deviceName = device.getName();
-                // String deviceHardwareAddress = device.getAddress(); //récupération de l'adresse MAC
+                main.this.ajouterDeviceListe(device.getName());
             }
         }
     };
@@ -171,5 +171,8 @@ public class main extends AppCompatActivity implements View.OnClickListener {
         bluetoothAdapter.cancelDiscovery();
         unregisterReceiver(mReceiver);
     }
+    protected void ajouterDeviceListe(String pNomDevice){
+        this.mAdapter.add(pNomDevice);
+        this.listDevice.setAdapter(this.mAdapter);
+    }
 }
-//fin Elodie
