@@ -95,26 +95,24 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                 // ---- Activation du bluetooth ----
                 // Test si l'appareil e
                 if (bluetoothAdapter == null) {
-                    Toast.makeText(this, "Bluetooth indisponible !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Bluetooth indisponible", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if (!bluetoothAdapter.isEnabled()) {
                         bluetoothAdapter.enable();
-                        Toast.makeText(this, "Bluetooth activer !!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Bluetooth activé", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        Toast.makeText(this, "Bluetooth déja activer !!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Bluetooth déjà activé", Toast.LENGTH_SHORT).show();
                     }
                 }
-                this.mIntentionActivtite2 = new Intent(main.this, lry.dip.launcher.launcher.class);
-                startActivity(this.mIntentionActivtite2);
                 break;
 
 
             case R.id.buttonAffiche:
                 // Test de l'existence de la fonctionalitée sur l'appareil
                 if (bluetoothAdapter == null) {
-                    Toast.makeText(this, "Bluetooth indisponible !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Bluetooth indisponible", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if (bluetoothAdapter.isEnabled()) {
@@ -122,7 +120,7 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                         String deviceL = "";
                         devices = bluetoothAdapter.getBondedDevices();
                         for (BluetoothDevice blueDevice : devices) {
-                            System.out.println("Device = " + blueDevice.getName());
+                            // System.out.println("Device = " + blueDevice.getName());
                             //Toast.makeText(this, "Device = " + blueDevice.getName(), Toast.LENGTH_SHORT).show();
                             deviceL = deviceL+blueDevice.getName()+" ; ";
                         }

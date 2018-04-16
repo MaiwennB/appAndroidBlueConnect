@@ -48,6 +48,6 @@ public class DeviceConfiguration {
     }
 
     public String toString(){
-        return String.format("%s : %s => %s", DeviceConfiguration.class, m_macAddress, m_launchIntent.getAction());
+        return String.format("%s : %s => %s", DeviceConfiguration.class, m_macAddress, m_launchIntent);
     }
 }
