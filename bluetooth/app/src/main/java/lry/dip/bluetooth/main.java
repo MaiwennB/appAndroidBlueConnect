@@ -36,6 +36,9 @@ public class main extends AppCompatActivity implements View.OnClickListener {
     private ListView listDevice;
     private TextView textDeviceC;
 
+    //La liste pour les devices
+    private String deviceL = "";
+
 
     private Intent mIntentionActivtite2;
     @Override
@@ -112,24 +115,21 @@ public class main extends AppCompatActivity implements View.OnClickListener {
 
 
             case R.id.buttonAffiche:
-                // Test de l'existence de la fonctionalitée sur l'appareil
+                // Test de l'existence de la fonctionalité sur l'appareil
                 if (bluetoothAdapter == null) {
                     Toast.makeText(this, "Bluetooth indisponible !!!", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if (bluetoothAdapter.isEnabled()) {
                         //liste des appareils déja connu
-                        String deviceL = "";
+                        this.deviceL = "";
                         devices = bluetoothAdapter.getBondedDevices();
                         for (BluetoothDevice blueDevice : devices) {
                             System.out.println("Device = " + blueDevice.getName());
                             //Toast.makeText(this, "Device = " + blueDevice.getName(), Toast.LENGTH_SHORT).show();
-                            deviceL = deviceL+blueDevice.getName()+" ; ";
+                            this.deviceL = this.deviceL+blueDevice.getName()+" ; ";
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                                android.R.layout.simple_list_item_1, deviceL.split(" ; "));
-                        listDevice.setAdapter(adapter);
-                        textDeviceC.setVisibility(View.VISIBLE);
+                        this.ajouterAppareilListe(this.deviceL);
 
                     }
                     else{
@@ -139,7 +139,8 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                 break;
             //Elodie
             case R.id.buttonRecherche:
-
+                //Remettre la liste des appareils affichés à 0
+                this.deviceL = "";
                 //enregistrement pour les diffusions lors de l'arrivée d'un nouvel appareil
                 IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
                 registerReceiver(mReceiver, filter);
@@ -151,7 +152,6 @@ public class main extends AppCompatActivity implements View.OnClickListener {
 
                 bluetoothAdapter.startDiscovery();
 
-                //mReceiver.onReceive(context, );
                 break;
             //fin Elodie
         }
@@ -164,8 +164,8 @@ public class main extends AppCompatActivity implements View.OnClickListener {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 Toast.makeText(context, "Nouvel appareil = " + device.getName(), Toast.LENGTH_SHORT).show();
-                // String deviceName = device.getName();
-                // String deviceHardwareAddress = device.getAddress(); //récupération de l'adresse MAC
+                main.this.deviceL = device.getName()+";";
+                main.this.ajouterAppareilListe(main.this.deviceL);
             }
         }
     };
@@ -177,4 +177,9 @@ public class main extends AppCompatActivity implements View.OnClickListener {
         unregisterReceiver(mReceiver);
     }
     //fin Elodie
+    protected void ajouterAppareilListe(String pListeAppareil){
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, pListeAppareil.split(" ; "));
+        listDevice.setAdapter(adapter);
+        textDeviceC.setVisibility(View.VISIBLE);
+    };
 }
