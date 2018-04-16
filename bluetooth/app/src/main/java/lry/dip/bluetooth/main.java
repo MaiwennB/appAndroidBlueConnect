@@ -48,14 +48,15 @@ public class main extends AppCompatActivity implements View.OnClickListener {
         btnRechercher.setOnClickListener(this);
 
         listDevice = (ListView)findViewById(R.id.listDevice);
-        /*listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listDevice.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(main.this, DeviceConfigurationActivity.class);
                 intent.putExtra(DeviceConfigurationActivity.KEY_EXTRA_DEVICE, (BluetoothDevice)devices.toArray()[i]);
                 startActivity(intent);
+                return true;
             }
-        });*/
+        });
 
         textDeviceC = (TextView)findViewById(R.id.text_devices_connu);
         textDeviceC.setText(R.string.textDC);
