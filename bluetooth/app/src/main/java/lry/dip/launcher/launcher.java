@@ -10,6 +10,7 @@ import android.widget.Toast;
 import android.content.Intent;
 
 import lry.dip.bluetooth.R;
+import lry.dip.intent.IntentHelper;
 
 public class launcher extends AppCompatActivity implements View.OnClickListener {
     private Button mBtnMusique;
@@ -35,20 +36,19 @@ public class launcher extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View view) {
         //Bouton de lancement de la musique
         if(view.getId() == R.id.btn_lnc_music){
-            this.mIntentionApplication = new Intent(MediaStore.INTENT_ACTION_MUSIC_PLAYER);
+            this.mIntentionApplication = IntentHelper.intentMusic();
             startActivity(this.mIntentionApplication);
         }
         //Bouton de lancement du GPS
         else if(view.getId() == R.id.btn_lnc_gps){
-            this.mIntentionApplication = new Intent(Intent.ACTION_VIEW);
-            this.mIntentionApplication.setPackage("com.google.android.apps.maps");
+            this.mIntentionApplication = IntentHelper.intentGPS();
             if (this.mIntentionApplication.resolveActivity(getPackageManager()) != null) {
                 startActivity(this.mIntentionApplication);
             }
         }
         //Bouton de lancement de Youtube
         else if(view.getId() == R.id.btn_lnc_youtube){
-            this.mIntentionApplication = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/"));
+            this.mIntentionApplication = IntentHelper.intentYoutube();
             startActivity(this.mIntentionApplication);
         }
     }

@@ -68,11 +68,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/buttonValider"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/device_configuration.buttonValider" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonValider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/device_configuration.buttonValider" />
+
+            <Button
+                android:id="@+id/buttonAnnuler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/device_configuration.buttonAnnuler" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

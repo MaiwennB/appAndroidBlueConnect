@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="launch_categories">
-        <item>@string/launcher.category.browser</item>
         <item>@string/launcher.category.gps</item>
         <item>@string/launcher.category.music</item>
+        <item>@string/launcher.category.youtube</item>
     </string-array>
 </resources>

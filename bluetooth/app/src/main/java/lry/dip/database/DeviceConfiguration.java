@@ -1,8 +1,10 @@
 package lry.dip.database;
 
+import android.content.Intent;
+
 public class DeviceConfiguration {
     private String m_macAddress;
-    private String m_launchIntent;
+    private Intent  m_launchIntent;
 
     /**
      * Default constructor
@@ -24,7 +26,7 @@ public class DeviceConfiguration {
      * @param macAddress
      * @param launchIntent
      */
-    public DeviceConfiguration(String macAddress, String launchIntent){
+    public DeviceConfiguration(String macAddress, Intent launchIntent){
         setMacAddress(macAddress);
         setLaunchIntent(launchIntent);
     }
@@ -37,15 +39,15 @@ public class DeviceConfiguration {
         m_macAddress = macAddress;
     }
 
-    public String getLaunchIntent(){
+    public Intent getLaunchIntent(){
         return m_launchIntent;
     }
 
-    public void setLaunchIntent(String launchIntent){
+    public void setLaunchIntent(Intent launchIntent){
         m_launchIntent = launchIntent;
     }
 
     public String toString(){
-        return String.format("%s : %s => %s", DeviceConfiguration.class, m_macAddress, m_launchIntent);
+        return String.format("%s : %s => %s", DeviceConfiguration.class, m_macAddress, m_launchIntent.getAction());
     }
 }

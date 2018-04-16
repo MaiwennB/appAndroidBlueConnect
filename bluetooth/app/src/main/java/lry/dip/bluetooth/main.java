@@ -1,5 +1,6 @@
 package lry.dip.bluetooth;
 
+import android.app.LauncherActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -19,10 +20,15 @@ import android.content.Intent;
 
 import java.util.Set;
 
+import lry.dip.database.DeviceConfiguration;
+import lry.dip.database.DeviceConfigurationDAO;
+
 public class main extends AppCompatActivity implements View.OnClickListener {
     // Bluetooth
     private Set<BluetoothDevice> devices;
     private BluetoothAdapter bluetoothAdapter;
+    private DeviceConfigurationDAO deviceConfigurationDAO;
+
     // Boutons de l'interface
     private Button btnActiver;
     private Button btnAfficher;
@@ -47,6 +53,10 @@ public class main extends AppCompatActivity implements View.OnClickListener {
         btnRechercher = (Button)findViewById(R.id.buttonRecherche);
         btnRechercher.setOnClickListener(this);
 
+        // Récupération DAO
+        deviceConfigurationDAO = new DeviceConfigurationDAO(getApplicationContext());
+        deviceConfigurationDAO.open();
+
         listDevice = (ListView)findViewById(R.id.listDevice);
         listDevice.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -55,6 +65,22 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                 intent.putExtra(DeviceConfigurationActivity.KEY_EXTRA_DEVICE, (BluetoothDevice)devices.toArray()[i]);
                 startActivity(intent);
                 return true;
+            }
+        });
+
+        listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Récupération de l'intent à partir du BluetoothDevice
+                BluetoothDevice device = (BluetoothDevice) devices.toArray()[i];
+                DeviceConfiguration deviceConfiguration = deviceConfigurationDAO.getWithMacAddress(device.getAddress());
+                Intent intent = deviceConfiguration.getLaunchIntent();
+                if(intent == null)
+                    intent = new Intent(main.this, lry.dip.launcher.launcher.class);
+
+                // Verify that the intent will resolve to an activity
+                if (intent.resolveActivity(getPackageManager()) != null)
+                    startActivity(intent);
             }
         });
 
@@ -145,6 +171,7 @@ public class main extends AppCompatActivity implements View.OnClickListener {
     };
 
     protected void onDestroy(){
+        deviceConfigurationDAO.close();
         super.onDestroy();
         bluetoothAdapter.cancelDiscovery();
         unregisterReceiver(mReceiver);

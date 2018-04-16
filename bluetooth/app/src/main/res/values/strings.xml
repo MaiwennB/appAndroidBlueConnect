@@ -9,9 +9,10 @@
     <string name="device_configuration.radioManual">Manuel</string>
     <string name="device_configuration.radioAuto">Automatique</string>
     <string name="device_configuration.buttonValider">Valider</string>
+    <string name="device_configuration.buttonAnnuler">Annuler</string>
 
     <!-- Launcher -->
-    <string name="launcher.category.browser">Navigateur</string>
+    <string name="launcher.category.youtube">Youtube</string>
     <string name="launcher.category.gps">GPS</string>
     <string name="launcher.category.music">Musique</string>
 
