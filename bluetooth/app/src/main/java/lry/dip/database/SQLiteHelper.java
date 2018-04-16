@@ -13,7 +13,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         "CREATE TABLE " + DEVICE_CONFIGURATION_TABLE_NAME + " (\n" +
         "\t" + DEVICE_CONFIGURATION_COLUMN_MAC + " STRING NOT NULL PRIMARY KEY,\n" +
         "\t" + DEVICE_CONFIGURATION_COLUMN_LAUNCH_INTENT + " string\n" +
-        ") WITHOUT ROWID;";
+        ");";
     public static final String DEVICE_CONFIGUATION_TABLE_DROP="DROP TABLE IF EXISTS " + DEVICE_CONFIGURATION_TABLE_NAME + ";"; // drop table script
 
     // DB configuration

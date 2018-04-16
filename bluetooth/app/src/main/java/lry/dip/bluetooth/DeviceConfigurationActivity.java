@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import lry.dip.database.DeviceConfiguration;
 import lry.dip.database.DeviceConfigurationDAO;
+import lry.dip.intent.IntentHelper;
 
 /**
  * Created by rtison on 12/04/2018.
@@ -39,6 +40,7 @@ public class DeviceConfigurationActivity extends AppCompatActivity{
     private RadioButton radioButtonManual;
     private Spinner spinnerLaunch;
     private Button buttonValider;
+    private Button buttonAnnuler;
 
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -63,15 +65,15 @@ public class DeviceConfigurationActivity extends AppCompatActivity{
         spinnerLaunch.setEnabled(radioButtonAuto.isChecked());
     }
 
-    private String intentNameFromSpinnerValue(String value){
-        if(value == getString(R.string.launcher_category_browser))
-            return Intent.CATEGORY_APP_BROWSER;
-        else if(value == getString(R.string.launcher_category_gps))
-            return Intent.CATEGORY_APP_MAPS;
+    private Intent intentFromSpinnerValue(String value){
+        if(value == getString(R.string.launcher_category_gps))
+            return IntentHelper.intentGPS();
         else if(value == getString(R.string.launcher_category_music))
-            return Intent.CATEGORY_APP_MUSIC;
+            return IntentHelper.intentMusic();
+        else if(value == getString(R.string.launcher_category_youtube))
+            return IntentHelper.intentYoutube();
         else
-            return Intent.CATEGORY_DEFAULT;
+            return null;
     }
 
     /**
@@ -92,14 +94,23 @@ public class DeviceConfigurationActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 // Récupération des valeurs
-                String intentValue = (radioButtonAuto.isChecked() ? intentNameFromSpinnerValue((String)spinnerLaunch.getSelectedItem()) : null);
+                Intent intentValue = (radioButtonAuto.isChecked() ? intentFromSpinnerValue((String)spinnerLaunch.getSelectedItem()) : null);
                 deviceConfiguration.setLaunchIntent(intentValue);
 
                 // Sauvegarde
                 deviceConfigurationDAO.saveDeviceConfiguration(deviceConfiguration);
 
                 // Redirection vers la page précédente
-                Toast.makeText(DeviceConfigurationActivity.this, "La configuration pour l'appareil a bien été prise en compte", Toast.LENGTH_LONG).show();
+                Toast.makeText(DeviceConfigurationActivity.this, "La configuration pour l'appareil a bien été prise en compte", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        // Au clic sur le bouton annuler
+        buttonAnnuler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DeviceConfigurationActivity.this, "Aucune modificatoin n'a été apportée", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
@@ -115,6 +126,7 @@ public class DeviceConfigurationActivity extends AppCompatActivity{
         radioButtonManual = findViewById(R.id.radioButtonManual);
         spinnerLaunch = findViewById(R.id.spinnerLaunch);
         buttonValider = findViewById(R.id.buttonValider);
+        buttonAnnuler = findViewById(R.id.buttonAnnuler);
     }
 
     /**
@@ -138,7 +150,7 @@ public class DeviceConfigurationActivity extends AppCompatActivity{
         spinnerLaunch.setAdapter(adapter);
 
         // Check les radios selon l'intent
-        String launchIntent = deviceConfiguration.getLaunchIntent();
+        Intent launchIntent = deviceConfiguration.getLaunchIntent();
         if(launchIntent!=null){
             radioButtonAuto.toggle();
 
@@ -146,7 +158,7 @@ public class DeviceConfigurationActivity extends AppCompatActivity{
             int itemNumber = spinnerLaunch.getCount();
             String tmpItem;
             for(int i = 0; i<itemNumber; i++){
-                if(launchIntent.equals(intentNameFromSpinnerValue((String)spinnerLaunch.getItemAtPosition(i)))) {
+                if(launchIntent.toUri(Intent.URI_ALLOW_UNSAFE).equals(intentFromSpinnerValue((String)spinnerLaunch.getItemAtPosition(i)).toUri(Intent.URI_ALLOW_UNSAFE))) {
                     spinnerLaunch.setSelection(i);
                     break;
                 }

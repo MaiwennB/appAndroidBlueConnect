@@ -2,12 +2,14 @@ package lry.dip.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Debug;
 import android.util.Log;
 
 import java.io.Console;
+import java.net.URISyntaxException;
 
 public class DeviceConfigurationDAO {
     private static final String DEBUG_STATE="DeviceConfigurationDAO";
@@ -46,7 +48,7 @@ public class DeviceConfigurationDAO {
         // Récupération des valeurs de la configuration
         ContentValues values = new ContentValues();
         values.put(SQLiteHelper.DEVICE_CONFIGURATION_COLUMN_MAC, deviceConfiguration.getMacAddress());
-        values.put(SQLiteHelper.DEVICE_CONFIGURATION_COLUMN_LAUNCH_INTENT, deviceConfiguration.getLaunchIntent());
+        values.put(SQLiteHelper.DEVICE_CONFIGURATION_COLUMN_LAUNCH_INTENT, deviceConfiguration.getLaunchIntent().toUri(Intent.URI_ALLOW_UNSAFE+Intent.URI_ANDROID_APP_SCHEME));
 
         // Requête d'insertion avec update si l'adresse mac existe déjà
         long insertId = database.insertWithOnConflict(SQLiteHelper.DEVICE_CONFIGURATION_TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_REPLACE);
@@ -89,7 +91,11 @@ public class DeviceConfigurationDAO {
     public DeviceConfiguration cursorToDeviceConfiguration(Cursor cursor){
         DeviceConfiguration deviceConfiguration = new DeviceConfiguration();
         deviceConfiguration.setMacAddress(cursor.getString(0));
-        deviceConfiguration.setLaunchIntent(cursor.getString(1));
+        try {
+            deviceConfiguration.setLaunchIntent(Intent.parseUri(cursor.getString(1), Intent.URI_ALLOW_UNSAFE+Intent.URI_ANDROID_APP_SCHEME));
+        } catch (URISyntaxException e) {
+            Log.e(DEBUG_STATE, "Erreur lors de la lecture de l'URI");
+        }
         return deviceConfiguration;
     }
 }
