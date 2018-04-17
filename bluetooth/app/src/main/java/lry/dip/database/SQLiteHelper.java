@@ -25,9 +25,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(DEVICE_CONFIGURATION_TABLE_CREATE);
-    }
+    public void onCreate(SQLiteDatabase sqLiteDatabase) { sqLiteDatabase.execSQL(DEVICE_CONFIGURATION_TABLE_CREATE); }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {

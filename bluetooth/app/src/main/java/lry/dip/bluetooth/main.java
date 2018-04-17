@@ -95,9 +95,6 @@ public class main extends AppCompatActivity implements View.OnClickListener {
         this.textDeviceC = (TextView) findViewById(R.id.text_devices_connu);
         this.textDeviceC.setText(R.string.textDC);
         this.textDeviceC.setVisibility(View.INVISIBLE);
-
-        this.mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-
     }
 
     public void onClick(View pView) {
@@ -119,6 +116,8 @@ public class main extends AppCompatActivity implements View.OnClickListener {
 
 
             case R.id.buttonAffiche:
+                this.mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
                 // Test de l'existence de la fonctionalitée sur l'appareil
                 if (this.bluetoothAdapter == null) {
                     Toast.makeText(this, "Bluetooth indisponible", Toast.LENGTH_SHORT).show();
@@ -138,6 +137,7 @@ public class main extends AppCompatActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.buttonRecherche:
+                this.mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
                 //enregistrement pour les diffusions lors de l'arrivée d'un nouvel appareil
                 IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
